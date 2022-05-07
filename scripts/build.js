@@ -171,6 +171,7 @@ function build(previousFileSizes) {
         }
         return reject(new Error(messages.errors.join('\n\n')));
       }
+      console.log(process.env.CI)
       if (
         process.env.CI &&
         (typeof process.env.CI !== 'string' ||
