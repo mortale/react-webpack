@@ -34,14 +34,13 @@ const RootContextWrapper = (InnerComponent: React.ComponentType<IFormDesignRootP
 /* form design data ctx */
 export const FormDesignDataContext = React.createContext<IFormDesignContextProps>(defaultState as any)
 
-const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesignDataProps, "templates">
-  & IDataDeliverProps>) => {
+const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesignDataProps, "templates"> & IDataDeliverProps>) => {
   // 校验是否结束需要滚动到错误位置
   return React.forwardRef<IFormDesignRef, IFormDesignDataProps & { formDesignId: string }>((props, ref) => {
-    const { formVo, templates, fieldFunctionContorl, formDesignId, customFieldAttrWithSetting, customFieldsRules, manualContorlSchema, onFormVoChange, onFieldChange, onChangeValidateInSetter,extendMaskLayers, fieldKey = "id", coustomPerview, ...otherProps } = props
+    const { formVo, templates, fieldFunctionContorl, formDesignId, customFieldAttrWithSetting, customFieldsRules, manualContorlSchema, onFormVoChange, onFieldChange, onChangeValidateInSetter, extendMaskLayers, fieldKey = "id", coustomPerview, ...otherProps } = props
     // formDesign 状态
     const [formDesignLifeStatus] = React.useState({ mounted: false, unMounted: false })
-    const [state, dispatch] = React.useReducer(formDesignDataReducer,cloneDeep(defaultState))
+    const [state, dispatch] = React.useReducer(formDesignDataReducer, cloneDeep(defaultState))
 
     React.useEffect(() => {
       formDesignLifeStatus.mounted = true
@@ -63,7 +62,7 @@ const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesign
         dispatch({ type: constants.INIT_FORMDESIGN, formDesignId })
       }).finally(() => {
         // TODO mount
-        if(formVo?.length){
+        if (formVo?.length) {
           dispatch({ type: constants.CHANGE_FORMVO, formVo })
         }
       })
@@ -95,7 +94,7 @@ const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesign
     // 设置formVo
     React.useEffect(() => {
       const supInfo = FormDesignSupInfo[formDesignId]
-      if(supInfo){
+      if (supInfo) {
         dispatch({ type: constants.CHANGE_FORMVO, formVo })
       }
       if (state.selectedFieldId) {
@@ -108,14 +107,14 @@ const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesign
       }
     }, [formVo])
     // 修改单个字段的属性
-    const changeField = React.useCallback((fieldId, newFieldInfo, cover = false) => {
+    const changeField = React.useCallback((fieldId:string, newFieldInfo:string, cover:boolean = false) => {
       dispatch({ type: constants.CHANGE_FIELD, fieldId, newFieldInfo, cover })
     }, [])
 
     const dataContextValue = React.useMemo(() => ({ ...state, changeField }), [state, changeField])
 
     return <FormDesignDataContext.Provider value={dataContextValue}>
-     <InnerComponent {...otherProps}
+      <InnerComponent {...otherProps}
         formDesignDataDiepatch={dispatch}
         formDesignState={state}
         formDesignId={formDesignId}
@@ -137,7 +136,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
   return React.forwardRef<IFormDesignRef, IFormDesignOperationsProps & IDataDeliverProps>((props, ref) => {
     const { formDesignState, formDesignDataDiepatch, placeFieldValidate, createInnerFieldInfo, moveFieldValidate, deleteFieldValidate, copyFieldValidate, createCopyFieldInfo, formDesignId, ...otherProps } = props
 
-    const validateOperation = React.useCallback((noValidate, contentInfo, operationInfo, validateFunc) => {
+    const validateOperation = React.useCallback((noValidate:any, contentInfo:any, operationInfo:any, validateFunc:any) => {
       const supInfo = FormDesignSupInfo[formDesignId]
       const operationField = supInfo.recoverField?.(formDesignState.fieldsMap[operationInfo.id])
       const contentField = supInfo.recoverField?.(formDesignState.fieldsMap[contentInfo.id])
@@ -154,7 +153,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
       return Promise.resolve(validateOperation(noValidate, placeLayerInfo, dragFieldInfo, placeFieldValidate)).then(({ validateResult, operationField, contentField }) => {
         if (validateResult) {
           // 创建新字段内容
-          console.log(supInfo.fieldInfoTemplate,dragFieldInfo.uniquelySign)
+          console.log(supInfo.fieldInfoTemplate, dragFieldInfo.uniquelySign)
           const { splitDownKeys, ...templateField } = cloneDeep(supInfo.fieldInfoTemplate[dragFieldInfo.uniquelySign])
           if (!templateField) {
             console.error(`${dragFieldInfo.uniquelySign}类型字段不存在`);
@@ -178,7 +177,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
       })
     }, [moveFieldValidate])
     // 删除事件
-    const deleteField = React.useCallback((fieldId: string | string[], contentFieldId: string|null, deleteIndex: number|null, e: any, noValidate: boolean = false) => {
+    const deleteField = React.useCallback((fieldId: string | string[], contentFieldId: string | null, deleteIndex: number | null, e: any, noValidate: boolean = false) => {
       e?.stopPropagation()
       return Promise.resolve(validateOperation(noValidate, { id: contentFieldId }, { id: fieldId }, deleteFieldValidate)).then(({ validateResult, operationField, contentField }) => {
         let dispatchParams: any
@@ -217,7 +216,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
       formDesignDataDiepatch({ type: constants.SELECT_FIELD, selectId })
     }, [])
     // 复制事件
-    const copyField = React.useCallback((copyFieldId: string, contentFieldId: string |null, innerIndex: number, e: any, noValidate: boolean = false) => {
+    const copyField = React.useCallback((copyFieldId: string, contentFieldId: string | null, innerIndex: number, e: any, noValidate: boolean = false) => {
       e?.stopPropagation()
       const supInfo = FormDesignSupInfo[formDesignId]
       return Promise.resolve(validateOperation(noValidate, { id: contentFieldId }, { id: copyFieldId }, copyFieldValidate)).then(({ validateResult, operationField, contentField }) => {
@@ -246,7 +245,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
 
 type FCType<T> = React.FC<T>
 type FCwithCtxType<T> = T extends FCType<infer U> ? U : any
-const ContextsWrapper = <T,>(ctxWraps: Array<(InnerComponent: React.ElementType) => React.FC>) => <P extends FCwithCtxType<T>,>(InnerComponent: React.ComponentType<P>) => ctxWraps.reduceRight((acc, ctxWrap) => ctxWrap(acc), InnerComponent)
+const ContextsWrapper = <T,>(ctxWraps: Array<(InnerComponent: React.ElementType) => React.FC>) => <P extends FCwithCtxType<T>,>(InnerComponent: React.ComponentType<P>) => ctxWraps.reduceRight((acc:any, ctxWrap) => ctxWrap(acc), InnerComponent)
 //@ts-ignore
 const FormDesignProviderWrapper = ContextsWrapper<IFormDesignProps>([RootContextWrapper, dataContextWrapper, operationsContextWrapper])
 

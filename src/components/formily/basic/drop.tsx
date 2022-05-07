@@ -177,7 +177,7 @@ const FieldDragWithDrop = React.forwardRef<any, any>(({ children, contentFieldId
     </div>
 })
 
-const Drop: React.FC<IDropProps> = ({ isDropContent = false, accept = constants.BASE, type = constants.BASE, children, fieldId, index, contentFieldId, ...props }) => {
+const Drop: React.FC<React.PropsWithChildren<IDropProps>> = ({ isDropContent = false, accept = constants.BASE, type = constants.BASE, children, fieldId, index, contentFieldId, ...props }) => {
 
     const { formDesignPerfixCls } = React.useContext(FormDesignRootContext)
 

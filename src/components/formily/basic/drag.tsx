@@ -1,4 +1,4 @@
-import * as  React from 'react'
+import React from 'react'
 import { useDrag } from 'react-dnd'
 import cs from 'classnames'
 // import IrsBaseIcon from '@ant-design/icons'
@@ -27,7 +27,7 @@ const DragDiv: React.FC<IDragProps> = React.memo(({ type = constants.BASE, canDr
     </>
 })
 
-const DragLayout: React.FC<IDragProps & { formDesignId: string }> = React.memo((props) => {
+const DragLayout: React.FC<React.PropsWithChildren<IDragProps & { formDesignId: string }>> = React.memo((props) => {
     const { children, type = constants.BASE, uniquelySign, canDrag, title, style, className, formDesignPerfixCls, formDesignId, ...otherProps } = props
     const supInfo = FormDesignSupInfo[formDesignId!]
     const dragId = React.useMemo(() => `${type}_${uniquelySign}`, [type, uniquelySign])
