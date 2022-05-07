@@ -1,0 +1,22 @@
+@import "../../../assets/less/variable.less";
+.@{form-design-prefix}{
+  .input-number-handler-wrap-contorl {
+    .@{ant-prefix}-input-number-handler-wrap{
+      opacity: 1;
+    }
+  }
+  .@{form-design-prefix}-date-field{
+    &>div>span{
+      pointer-events:unset;
+    }
+  }
+  .@{form-design-prefix}-simulator-content{
+    height: 100%;
+    overflow:overlay;
+    .@{form-design-prefix}-drop-content {
+      height: 100%;
+      position: relative;
+      overflow: auto;
+    }
+  }
+}

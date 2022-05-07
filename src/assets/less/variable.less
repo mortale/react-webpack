@@ -1,0 +1,55 @@
+@import "colorPalette";
+
+@theme: default;
+@ant-prefix: ant;
+@mortale-prefix:mortale;
+@form-design-prefix:~'@{mortale-prefix}-form-design';
+@apl-set-prefix:~'@{mortale-prefix}-apl-set';
+@adv-set-prefix:~'@{mortale-prefix}-adv-set';
+@proc-set-prefix:~'@{mortale-prefix}-proc-set';
+
+@red-base: #f5222d;
+@red-5: color(~`colorPalette('@{red-6}', 5) `);
+@red-6: @red-base;
+
+@gold-base: #faad14;
+@gold-6: @gold-base;
+@warning-color: @gold-6;
+
+@green-base: #52c41a;
+@green-6: @green-base;
+@success-color: @green-6;
+
+@blue-base: #1890ff;
+@blue-6: @blue-base;
+@primary-color: @blue-6;
+
+@border-color-base: hsv(0, 0, 85%);
+
+@primary-color-7: #096dd9;
+@borderColor: #d9d9d9;
+@themebgColor: #e3f4f1;
+@maskColor: rgba(255, 255, 255, 0.6);
+@black65Color: rgba(0, 0, 0, 0.65);
+@black25Color: rgba(0, 0, 0, 0.25);
+@bgColor: #f3f3f3;
+
+.@{mortale-prefix}-block-loading{
+  height: 100%;
+  >div{
+    height: inherit;
+    >div:last-child{
+      height: inherit;
+    }
+  }
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.flex{
+display: flex;
+}

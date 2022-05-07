@@ -1,9 +1,9 @@
 import './public-path';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Router from './router';
-
+import 'antd/dist/antd.css'
+import './index.css'
 declare global {
   interface Window {
     microApp: any
@@ -18,17 +18,17 @@ function handleMicroData () {
   // 是否是微前端环境
   if (window.__MICRO_APP_ENVIRONMENT__) {
     // 主动获取基座下发的数据
-    console.log('child-react17 getData:', window.microApp.getData());
+    // console.log('child-react17 getData:', window.microApp.getData());
 
     // 监听基座下发的数据变化
     window.microApp.addDataListener((data: Record<string, unknown>) => {
-      console.log('child-react17 addDataListener:', data);
+      // console.log('child-react17 addDataListener:', data);
     })
 
     // 向基座发送数据
-    setTimeout(() => {
-      window.microApp.dispatch({ myname: 'child-react17' });
-    }, 3000)
+    // setTimeout(() => {
+    //   window.microApp.dispatch({ myname: 'child-react17' });
+    // }, 3000)
   }
 }
 
@@ -54,13 +54,14 @@ function handleMicroData () {
 // 将渲染操作放入 mount 函数
 function mount () {
   ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <Router />
-    </React.StrictMode>,
+    // </React.StrictMode>
+    ,
     document.getElementById('react17-root')
   );
 
-  console.log('微应用child-react17渲染了');
+  // console.log('微应用child-react17渲染了');
 
   handleMicroData()
 }
@@ -68,7 +69,7 @@ function mount () {
 // 将卸载操作放入 unmount 函数
 function unmount () {
   ReactDOM.unmountComponentAtNode(document.getElementById('react17-root')!);
-  console.log('微应用child-react17卸载了');
+  // console.log('微应用child-react17卸载了');
 }
 
 // 微前端环境下，注册mount和unmount方法

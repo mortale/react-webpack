@@ -6,19 +6,31 @@
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "baseUrl": "",           // 工作根目录
+    "outDir": "build/dist",  // 指定输出目录
+    "module": "esnext",   // 指定生成哪个模块系统代码
+    "sourceMap": true,    // 生成目标文件的sourceMap文件
+    "allowJs": true,      // 允许编译器编译JS，JSX文件
+    // "diagnostics": true,
+    "jsx": "react",       //在 .tsx 中支持 JSX ：React 或 Preserve
+    "moduleResolution": "node",     // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
+    "rootDir": ".",   // 指定输出文件目录(用于输出)，用于控制输出目录结构
     "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,      //每个分支都会有返回值
+    "noImplicitThis": true,         // 不允许this有隐式的any类型
+    "noImplicitAny": true,          // 不允许隐式的any类型
+    "strictNullChecks": true,       // 不允许把null、undefined赋值给其他类型的变量
+    "suppressImplicitAnyIndexErrors": true,      
+    "noUnusedLocals": true,         // 检查只声明、未使用的局部变量(只提示不报错)
+    "experimentalDecorators": true, // 用于指定是否启用实验性的装饰器特性
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,    // 用来指定允许从没有默认导出的模块中默认导入
+    "esModuleInterop": true,
+    "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
     "typeRoots": [
       "node_modules/@types",
       "global.d.ts"
