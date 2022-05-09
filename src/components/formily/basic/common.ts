@@ -471,15 +471,15 @@ export class FormDesignSupInfo {
       extendMaskLayers,
       ...otherSupInfo
     } = supInfo;
-    console.log('initSupInfo',templates)
     const templateData = splitTemplates(templates);
     this[formDesignId] = {
       mounted: true,
       fieldFunctionContorl,
+      templates,
+      extendMaskLayers,
       ...otherSupInfo,
       ...templateData,
       dndMaskLayerTemplates: observable(extendMaskLayers || {}),
-      extendMaskLayers,
     };
     Object.assign(this[formDesignId], {
       transformField: transformField.bind(this[formDesignId]),
@@ -508,7 +508,6 @@ export class FormDesignSupInfo {
       newData;
     const targetData: any = otherProps;
     if (templates && perData.templates !== templates) {
-    console.log('diffChange',templates)
       Object.assign(targetData, splitTemplates(templates));
     }
     return targetData;

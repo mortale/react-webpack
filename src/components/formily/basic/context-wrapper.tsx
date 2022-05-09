@@ -39,26 +39,37 @@ const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesign
   return React.forwardRef<IFormDesignRef, IFormDesignDataProps & { formDesignId: string }>((props, ref) => {
     const { formVo, templates, fieldFunctionContorl, formDesignId, customFieldAttrWithSetting, customFieldsRules, manualContorlSchema, onFormVoChange, onFieldChange, onChangeValidateInSetter, extendMaskLayers, fieldKey = "id", coustomPerview, ...otherProps } = props
     // formDesign 状态
-    const [formDesignLifeStatus] = React.useState({ mounted: false, unMounted: false })
     const [state, dispatch] = React.useReducer(formDesignDataReducer, cloneDeep(defaultState))
 
+     // 修改FormDesign对应formDesignId的静态数据（此类数据改变不需要引起视图的刷新，如果需要需要走其他操作）
+     React.useEffect(() => {
+      FormDesignSupInfo.changeSupInfo(formDesignId, {
+        fieldFunctionContorl,
+        customFieldAttrWithSetting,
+        customFieldsRules,
+        templates,
+        manualContorlSchema,
+        onFormVoChange,
+        onFieldChange,
+        CoustomPerView: coustomPerview
+      })
+  }, [templates, fieldFunctionContorl, customFieldAttrWithSetting, customFieldsRules, manualContorlSchema, onFormVoChange, onFieldChange, coustomPerview])
+
     React.useEffect(() => {
-      formDesignLifeStatus.mounted = true
-      Promise.resolve().then(() => {
-        FormDesignSupInfo.initSupInfo(formDesignId, {
-          fieldFunctionContorl,
-          customFieldAttrWithSetting,
-          templates,
-          customFieldsRules,
-          validateWithScrollSign: observable.ref(""),
-          manualContorlSchema,
-          onFormVoChange,
-          onFieldChange,
-          onChangeValidateInSetter,
-          fieldKey,
-          CoustomPerView: coustomPerview,
-          extendMaskLayers
-        })
+      Promise.resolve(FormDesignSupInfo.initSupInfo(formDesignId, {
+        fieldFunctionContorl,
+        customFieldAttrWithSetting,
+        templates,
+        customFieldsRules,
+        validateWithScrollSign: observable.ref(""),
+        manualContorlSchema,
+        onFormVoChange,
+        onFieldChange,
+        onChangeValidateInSetter,
+        fieldKey,
+        CoustomPerView: coustomPerview,
+        extendMaskLayers
+      })).then(() => {
         dispatch({ type: constants.INIT_FORMDESIGN, formDesignId })
       }).finally(() => {
         // TODO mount
@@ -67,30 +78,14 @@ const dataContextWrapper = (InnerComponent: React.ComponentType<Omit<IFormDesign
         }
       })
       return () => {
-        Promise.resolve().then(() => {
-          FormDesignSupInfo.deleteSupInfo(formDesignId)
-          formDesignLifeStatus.unMounted = true
+        Promise.resolve(FormDesignSupInfo.deleteSupInfo(formDesignId)).then(() => {
           dispatch({ type: constants.CLEAR_FORMDESIGN })
         }).finally(() => {
           // TODO unmount
         })
       }
     }, [])
-    // 修改FormDesign对应formDesignId的静态数据（此类数据改变不需要引起视图的刷新，如果需要需要走其他操作）
-    React.useEffect(() => {
-      if (formDesignLifeStatus.mounted) {
-        FormDesignSupInfo.changeSupInfo(formDesignId, {
-          fieldFunctionContorl,
-          customFieldAttrWithSetting,
-          customFieldsRules,
-          templates,
-          manualContorlSchema,
-          onFormVoChange,
-          onFieldChange,
-          CoustomPerView: coustomPerview
-        })
-      }
-    }, [templates, fieldFunctionContorl, customFieldAttrWithSetting, customFieldsRules, manualContorlSchema, onFormVoChange, onFieldChange, coustomPerview])
+   
     // 设置formVo
     React.useEffect(() => {
       const supInfo = FormDesignSupInfo[formDesignId]
@@ -152,7 +147,6 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
       // 校验
       return Promise.resolve(validateOperation(noValidate, placeLayerInfo, dragFieldInfo, placeFieldValidate)).then(({ validateResult, operationField, contentField }) => {
         if (validateResult) {
-          console.log(supInfo,formDesignId,111)
           // 创建新字段内容
           const { splitDownKeys, ...templateField } = cloneDeep(supInfo.fieldInfoTemplate[dragFieldInfo.uniquelySign])
           if (!templateField) {
