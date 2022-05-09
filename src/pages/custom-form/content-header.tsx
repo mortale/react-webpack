@@ -34,13 +34,17 @@ interface IProps {
     onChange: (sign: string) => void
 }
 
+const dataSource = [{ children: <Icon type="icon-design" />, sign: 'design' }, 
+{ children: <Icon type="icon-json" />, sign: "json" },
+{children: <Icon type="icon-yunhang"/>,sign: 'run'}]
+
 const ContentHeader: React.FC<IProps> = ({ onChange }) => {
     const { prefix } = React.useContext(rootContext)
 
     return <div className={`flex ${prefix}-content-header`}>
         <ButtonGroup
             buttonSize='small'
-            dataSource={[{ children: <Icon type="icon-design" />, sign: 'design' }, { children: <Icon type="icon-json" />, sign: "json" }]}
+            dataSource={dataSource}
             onChange={onChange}
         />
     </div>

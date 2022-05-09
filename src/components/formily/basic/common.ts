@@ -449,7 +449,6 @@ export const createNewFieldHandle = (innerField: any, supInfo: any) => {
         ...otherProps,
         id,
         [fieldKey]: id,
-        isNew: true,
         title,
       };
       if (items && Array.isArray(items)) {
@@ -473,6 +472,7 @@ export class FormDesignSupInfo {
       ...otherSupInfo
     } = supInfo;
     const templateData = splitTemplates(templates);
+    console.log(templateData)
     this[formDesignId] = {
       mounted: true,
       fieldFunctionContorl,

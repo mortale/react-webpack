@@ -26,7 +26,7 @@ const validateWithScroll = (form: Form) => {
 }
 
 const DefaultNoData = () => {
-  return <div style={{height:'100%',display:'flex',alignItems:"center",justifyContent:"center"}}>请选择需要设置的组件</div>
+  return <div style={{ height: '100%', display: 'flex', alignItems: "center", justifyContent: "center" }}>请选择需要设置的组件</div>
 }
 
 const useFormCoreData = (selectedFieldId: string, fieldsMap: any, supInfo: any, changeField: any) => {
@@ -70,7 +70,7 @@ const useFormCoreData = (selectedFieldId: string, fieldsMap: any, supInfo: any, 
         }
       })
       onFieldInputValueChange("*", (field) => {
-        curSupInfo.onFieldChange(field.props.name, field.value)
+        curSupInfo.onFieldChange?.(field.props.name, field.value)
       })
       onFormInputChange((f) => {
         changeField(cacheCite.selectedFieldId, f.values)
@@ -177,14 +177,16 @@ const SetterPaneWithContext: React.FC<ISetterPaneOuterProps> = (props) => {
 
   const createSchemaFieldParams = React.useMemo(() => {
     const options = {
-      components: { ...createCommonField(supInfo,formDesignPerfixCls!), ...expandField(supInfo, expandFields) },
+      components: { ...createCommonField(supInfo, formDesignPerfixCls!), ...expandField(supInfo, expandFields) },
       scope: {
         typeEffect(field: Field) {
           const { value } = field
-          const { title, description, inheritCode, tips, isNew, id, parId } = field.form.values || {}
-          const base = typeof isNew === 'boolean' ? { isNew } : {}
+          const values = field.form.values || {}
+          const fieldKey = supInfo.fieldKey
+          const { title, description, placeholder,  id, parId } = values
+          const base = {}
           const { splitDownKeys, ...template } = (supInfo.fieldInfoTemplate || {})[value]
-          const newValue = { ...base, ...template, title, description, inheritCode, tips, id, parId }
+          const newValue = { ...base, ...template, title, description, [fieldKey]: values[fieldKey], placeholder, id, parId }
           changeField("", newValue, true)
         },
         customScope: scope

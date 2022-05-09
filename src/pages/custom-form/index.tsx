@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { uniqueId } from 'lodash'
+// import { uniqueId } from 'lodash'
 import { FormDesignProvider, } from '../../components/formily'
 //@ts-ignore
 import { Layout, } from 'antd'
@@ -11,7 +11,7 @@ const textSchema = require('./field-json/text.json')
 const textareaSchema = require('./field-json/textarea.json')
 const dateSchema = require('./field-json/date.json')
 const numberSchema = require('./field-json/number.json')
-const radioSchema = require('./field-json/radio.json')
+const selectSchema = require('./field-json/select.json')
 
 
 
@@ -20,7 +20,7 @@ const templates = [
   { TEXTAREA: textareaSchema },
   { DATE: dateSchema },
   { NUMBER: numberSchema },
-  { RADIO: radioSchema }
+  { SELECT: selectSchema }
 ]
 
 const dataSource = [{
@@ -36,8 +36,8 @@ const dataSource = [{
   name: "数值",
   uniquelySign: "NUMBER",
 }, {
-  name: "单选",
-  uniquelySign: "RADIO",
+  name: "选择",
+  uniquelySign: "SELECT",
 }]
 
 
@@ -64,15 +64,7 @@ const Main: React.FC<any> = () => {
   }, [])
 
 
-  const createInnerFieldInfo = (field: any) => {
-    const inheritCode = uniqueId(`A-${Math.random().toString(36).slice(-8)}-`)
-    return { ...field, inheritCode }
-  }
 
-  const createCopyFieldInfo = (copyTemplate: any) => {
-    const inheritCode = uniqueId(`a-${Math.random().toString(36).slice(-8)}-`)
-    return { ...copyTemplate, inheritCode }
-  }
 
 
   return <>
@@ -85,9 +77,9 @@ const Main: React.FC<any> = () => {
           style={{ flex: 1, overflow: "hidden" }}
           ref={formDesignRef}
           formVo={formVo}
-          createInnerFieldInfo={createInnerFieldInfo}
-          createCopyFieldInfo={createCopyFieldInfo}
-          fieldKey="inheritCode"
+          // fieldKey="inheritCode"
+          // createInnerFieldInfo={createInnerFieldInfo}
+          // createCopyFieldInfo={createCopyFieldInfo}
         // fieldFunctionContorl={fieldFunctionContorl}
         // customFieldsRules={customFieldsRules}
         // deleteFieldValidate={deleteFieldValidate}
@@ -117,6 +109,16 @@ const Page: React.FC = () => {
 }
 
 export default Page;
+
+// const createInnerFieldInfo = (field: any) => {
+//   const inheritCode = uniqueId(`A-${Math.random().toString(36).slice(-8)}-`)
+//   return { ...field, inheritCode }
+// }
+
+// const createCopyFieldInfo = (copyTemplate: any) => {
+//   const inheritCode = uniqueId(`a-${Math.random().toString(36).slice(-8)}-`)
+//   return { ...copyTemplate, inheritCode }
+// }
 
   // const fakerUnquiely = (fieldsMap: any) => {
   //   setCount(count + 1)

@@ -33,7 +33,7 @@ export interface IFieldVoInfo {
   id?: string;
   type: string;
   title?: string;
-  tips?: string;
+  placeholder?: string;
   required?: boolean;
   [key: string]: any;
 }

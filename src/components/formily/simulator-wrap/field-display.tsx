@@ -59,14 +59,14 @@ const transformProps = (InnerComponents: React.ElementType) => {
         wrapperCol={wrapperCol}
         label={fieldInfo.title || " "}
         asterisk={fieldInfo["statusInfo>statusType"] === "EDITABLE" && fieldInfo.required}
-        tooltip={fieldInfo.description}
+        extra={fieldInfo.description}
         wrapperStyle={{ pointerEvents: "none" }}
         style={{ marginBottom: "0" }}
         mode={mode}
       >
         <InnerComponents
           fieldInfo={fieldInfo}
-          placeholder={fieldInfo.tips}
+          placeholder={fieldInfo.placeholder}
           disabled={fieldInfo["statusInfo>statusType"] !== "EDITABLE"}
           style={fieldInfo.style || {}}
           className={cs(`${formDesignPerfixCls}-${fieldInfo.type?.replace("_", "-")?.toLocaleLowerCase?.() || 'unknow'}-field`, fieldInfo.className)}

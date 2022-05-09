@@ -152,8 +152,8 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
       // 校验
       return Promise.resolve(validateOperation(noValidate, placeLayerInfo, dragFieldInfo, placeFieldValidate)).then(({ validateResult, operationField, contentField }) => {
         if (validateResult) {
+          console.log(supInfo,formDesignId,111)
           // 创建新字段内容
-          console.log(supInfo.fieldInfoTemplate, dragFieldInfo.uniquelySign)
           const { splitDownKeys, ...templateField } = cloneDeep(supInfo.fieldInfoTemplate[dragFieldInfo.uniquelySign])
           if (!templateField) {
             console.error(`${dragFieldInfo.uniquelySign}类型字段不存在`);
@@ -245,7 +245,7 @@ const operationsContextWrapper = (InnerComponent: React.ComponentType<ICommonPro
 
 type FCType<T> = React.FC<T>
 type FCwithCtxType<T> = T extends FCType<infer U> ? U : any
-const ContextsWrapper = <T,>(ctxWraps: Array<(InnerComponent: React.ElementType) => React.FC>) => <P extends FCwithCtxType<T>,>(InnerComponent: React.ComponentType<P>) => ctxWraps.reduceRight((acc:any, ctxWrap) => ctxWrap(acc), InnerComponent)
+const ContextsWrapper = <T,>(ctxWraps: Array<(InnerComponent: React.ElementType) => React.FC>) => <P extends FCwithCtxType<T>,>(InnerComponent: React.ComponentType<P>) => ctxWraps.reduceRight((acc, ctxWrap) => ctxWrap(acc), InnerComponent)
 //@ts-ignore
 const FormDesignProviderWrapper = ContextsWrapper<IFormDesignProps>([RootContextWrapper, dataContextWrapper, operationsContextWrapper])
 
