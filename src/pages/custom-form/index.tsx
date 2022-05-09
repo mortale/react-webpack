@@ -60,11 +60,13 @@ const Main: React.FC<any> = () => {
   const [curTemplates, setCurTemplates] = React.useState<any[]>([])
 
   React.useEffect(() => {
+    console.log('mounted')
     setCurTemplates(templates)
+    return () => {
+      console.log('unmounted')
+      setCurTemplates([])
+    }
   }, [])
-
-
-
 
 
   return <>

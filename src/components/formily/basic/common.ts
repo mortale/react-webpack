@@ -471,8 +471,8 @@ export class FormDesignSupInfo {
       extendMaskLayers,
       ...otherSupInfo
     } = supInfo;
+    console.log('initSupInfo',templates)
     const templateData = splitTemplates(templates);
-    console.log(templateData)
     this[formDesignId] = {
       mounted: true,
       fieldFunctionContorl,
@@ -508,6 +508,7 @@ export class FormDesignSupInfo {
       newData;
     const targetData: any = otherProps;
     if (templates && perData.templates !== templates) {
+    console.log('diffChange',templates)
       Object.assign(targetData, splitTemplates(templates));
     }
     return targetData;
