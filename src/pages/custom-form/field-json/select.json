@@ -92,6 +92,14 @@
           "x-component-props": {
             "placeholder": "请输入"
           }
+        },
+        "options":{
+          "title":"选项设置",
+          "x-decorator": "FormItem",
+          "x-component": "ModalContorl",
+          "x-component-props":{
+            "text":"配置可选项"
+          }
         }
       }
     },
@@ -124,25 +132,6 @@
               "value": "HIDDEN"
             }
           ]
-        }
-      }
-    },
-    "associateSetterGroup": {
-      "type": "void",
-      "x-component": "FormGroup",
-      "x-component-props": {
-        "title": "关联词典表"
-      },
-      "properties": {
-        "statusInfo>editableInfo>associateInfo": {
-          "x-decorator": "FormItem",
-          "x-component": "AssociateDataSourceSetter",
-          "x-decorator-props": {
-            "span": 24
-          },
-          "x-validator": {
-            "customFieldsRules": true
-          }
         }
       }
     },

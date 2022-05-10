@@ -5,12 +5,13 @@ import { rootContext, formDesignContext } from './context'
 import ContentHeader from './content-header'
 import transformSchema from '../../components/formily-example/schema'
 import Form from '../../components/formily-example'
+import ModalContorl from './modal-contorl'
 const { Content, Sider } = Layout
 const { TextArea } = Input
 
 const expandFields = {
     CustomDataSourceSetter: Input,
-    AssociateDataSourceSetter: () => "AssociateDataSourceSetter",
+    ModalContorl,
     NonEditableInfoSetter: (props: any) => <Select options={[{ key: "1", value: "1" }, { key: "2", value: "2" }]} {...props} />,
 }
 interface IDragGroupProps {

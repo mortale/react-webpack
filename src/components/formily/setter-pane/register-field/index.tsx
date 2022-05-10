@@ -8,8 +8,8 @@ import RangeSetter, { rangeSetterValidateRules, rangeSetterEeactRangeErrorMsg } 
 import Input from 'antd/lib/input'
 import Select from 'antd/lib/select'
 import InputNumber from 'antd/lib/input-number'
-import Radio from '../../../radio'
 import Checkbox from 'antd/lib/checkbox'
+import Radio from '../../../radio'
 const { TextArea } = Input
 
 const isObject = (data: any) => Object.prototype.toString.call(data) === "[object Object]";

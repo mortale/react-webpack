@@ -24,3 +24,62 @@
   padding: 4px;
 }
 
+@data-source-prefix:~'@{prefix}-data-source-setter-layout';
+.@{data-source-prefix}{
+  border: 1px solid #d9d9d9;
+  >div:not(:last-child){
+    border-right: 1px solid #d9d9d9;
+  }
+}
+.@{data-source-prefix}-common{
+  >.@{data-source-prefix}-common-header{
+    padding: 4px 8px;
+    border-bottom:1px solid #d9d9d9 ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  >.@{data-source-prefix}-common-content{
+    padding:4px 8px;
+    height: 360px;
+    overflow: overlay;
+  }
+}
+.@{data-source-prefix}-left{
+flex: 2;
+}
+.@{data-source-prefix}-right{
+flex: 3;
+}
+.@{data-source-prefix}-tree-node {
+  align-items: center;
+  justify-content:space-between;
+  >.tree-node-delete-handler{
+    visibility: hidden;
+  }
+  &:hover{
+    >.tree-node-delete-handler{
+      visibility: visible;
+    }
+  }
+}
+
+.@{data-source-prefix}-params-setter {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  >div{
+    flex:1;
+    padding:  8px;
+    display: flex;
+    align-items: center;
+  }
+  >span {
+    cursor: pointer;
+  }
+  border-bottom: 1px solid #d9d9d9;
+  &:not(:last-child){
+    margin-bottom:8px;
+  }
+}
