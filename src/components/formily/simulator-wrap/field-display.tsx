@@ -91,9 +91,9 @@ const NUMBER: React.FC<any> = transformProps(({ fieldInfo, ...props }) => {
 })
 
 
-const RADIO: React.FC<any> = transformProps(({ fieldInfo, ...props }) => <Select {...props} />)
+const SELECT: React.FC<any> = transformProps(({ fieldInfo, ...props }) => <Select {...props} />)
 
-const UIComponents: any = { TEXT, TEXTAREA, DATE, NUMBER,  RADIO }
+const UIComponents: any = { TEXT, TEXTAREA, DATE, NUMBER,  SELECT }
 
 const FieldUIComponent: React.FC<{ fieldId: string }> = ({ fieldId }) => {
   const { fieldsMap } = React.useContext(FormDesignDataContext)
