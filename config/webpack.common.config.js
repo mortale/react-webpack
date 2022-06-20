@@ -197,8 +197,8 @@ const createCommon = function (isEnvDevelopment) {
     output: {
       assetModuleFilename: 'static/media/[name].[hash][ext][query]',
       publicPath: paths.publicUrlOrPath,
-      chunkLoadingGlobal: `webpackJsonp${appPackageJson.name}`,
-      globalObject: 'this',
+      // chunkLoadingGlobal: `webpackJsonp${appPackageJson.name}`,
+      // globalObject: 'this',
     },
 
     resolve: {
@@ -364,6 +364,7 @@ const createCommon = function (isEnvDevelopment) {
       minimize: !isEnvDevelopment,
       minimizer: [
         new TerserPlugin({
+          extractComments:false,
           terserOptions: {
             parse: {
               ecma: 8,
@@ -390,6 +391,9 @@ const createCommon = function (isEnvDevelopment) {
         new CssMinimizerPlugin(),
       ],
       splitChunks: {
+        chunks: 'all',
+        minChunks: 2,
+        automaticNameDelimiter: '.',
         cacheGroups: {
           'formily-dll': {
             test: (module) => {
@@ -450,21 +454,6 @@ const createCommon = function (isEnvDevelopment) {
             reuseExistingChunk: true,
           },
         },
-     
-
-
-        // name(module, chunks, cacheGroupKey) {
-        //   const moduleFileName = module
-        //     .identifier()
-        //     .split('/')
-        //     .reduceRight((item) => item);
-        //   const allChunksNames = chunks.map((item) => item.name).join('~');
-        //   console.log(cacheGroupKey,allChunksNames,moduleFileName)
-        //   console.log('^^^^^^')
-        //   return ""+Math.random()+"~"+cacheGroupKey+"~"+allChunksNames+"~"+moduleFileName
-        // },
-        chunks: 'all',
-
       },
       runtimeChunk: {
         name: entrypoint => `runtime-${entrypoint.name}`,
