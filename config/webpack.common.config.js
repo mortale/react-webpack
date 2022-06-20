@@ -197,8 +197,8 @@ const createCommon = function (isEnvDevelopment) {
     output: {
       assetModuleFilename: 'static/media/[name].[hash][ext][query]',
       publicPath: paths.publicUrlOrPath,
-      // chunkLoadingGlobal: `webpackJsonp${appPackageJson.name}`,
-      // globalObject: 'this',
+      chunkLoadingGlobal: `webpackJsonp_${appPackageJson.name}`,
+      globalObject: 'window',
     },
 
     resolve: {
@@ -447,7 +447,7 @@ const createCommon = function (isEnvDevelopment) {
           },
           "vendors-dll": {
             chunks: 'all',
-            test: /node_modules(?!\/(antd|rc-|@formily|@ant-design))/,
+            test: /[\\/]module[\\/](?!(antd|rc-|@formily|@ant-design))/,
             name: 'vendors-dll',
             enforce: true,
             priority: -10,
